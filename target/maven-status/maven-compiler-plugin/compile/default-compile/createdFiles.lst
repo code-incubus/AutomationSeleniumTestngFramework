@@ -1,0 +1,9 @@
+pages\BasePage.class
+utils\LoggerUtils.class
+pages\LoginPage.class
+utils\PropertiesUtils.class
+data\Time.class
+pages\CommonLoggedOutPage.class
+pages\DevicesPage.class
+pages\CommonLoggedInPage.class
+utils\WebDriverUtils.class
