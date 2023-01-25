@@ -1,7 +1,0 @@
-2023-01-25 00:58:11,089 DEBUG setupDriver()
-2023-01-25 00:58:11,096 DEBUG setUpDriver(chrome, Is Headless: false)
-2023-01-25 00:58:14,844 INFO getPageUrl(/login?redirect=%2Flogin)
-2023-01-25 00:58:14,845 INFO new LoginPage()
-2023-01-25 00:58:14,845 INFO Opening Login page...
-2023-01-25 00:58:17,653 DEBUG tearDown()
-2023-01-25 00:58:17,653 DEBUG quitDriver()
