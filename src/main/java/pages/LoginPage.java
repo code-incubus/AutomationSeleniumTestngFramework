@@ -3,6 +3,7 @@ package pages;
 import data.PageUrlPaths;
 import data.Time;
 import org.openqa.selenium.WebDriver;
+import utils.Locators;
 
 public class LoginPage extends CommonLoggedOutPage {
 
@@ -19,7 +20,43 @@ public class LoginPage extends CommonLoggedOutPage {
         return this;
     }
 
-    public void verifyLoginPage() {
-        waitForUrlChange(LOGIN_PAGE_URL, Time.TIME_SHORT);
+    public LoginPage verifyLoginPage() {
+        waitForUrlChangeToExactUrl(LOGIN_PAGE_URL, Time.TIME_SHORTEST);
+        waitUntilPageIsReady(Time.TIME_SHORT);
+        return this;
+    }
+
+    public void typeUsername(String sUsername) {
+        logger.debug("typeUsername(" + sUsername + ")");
+        clearAndTypeTextToWebElement(Locators.USERNAME, sUsername);
+    }
+
+    public String getUsername() {
+        logger.debug("getUsername()");
+        return getValueFromWebElement(getWebElement(Locators.USERNAME));
+    }
+
+    public String getPassword() {
+        logger.debug("getPassword()");
+        return getValueFromWebElement(getWebElement(Locators.PASSWORD));
+    }
+
+    public void typePassword(String sPassword) {
+        logger.debug("typePassword(" + sPassword + ")");
+        clearAndTypeTextToWebElement(Locators.PASSWORD, sPassword);
+    }
+
+    public DevicesPage clickOnLoginButton() {
+        logger.debug("clickOnLoginButton()");
+        clickOnWebElement(Locators.LOGIN_BUTTON);
+        DevicesPage devicesPage = new DevicesPage(driver);
+        return devicesPage.verifyDevicesPage();
+    }
+
+    public LoginPage clickOnLoginButtonNoProgress() {
+        logger.debug("clickOnLoginButtonNoProgress()");
+        clickOnWebElement(Locators.LOGIN_BUTTON);
+        LoginPage loginPage = new LoginPage(driver);
+        return loginPage.verifyLoginPage();
     }
 }

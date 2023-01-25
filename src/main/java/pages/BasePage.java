@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -31,13 +32,53 @@ public abstract class BasePage extends LoggerUtils {
         return driverWait.until(ExpectedConditions.urlContains(sUrl));
     }
 
-    public void click(By locatorButton) {
-        WebElement button = driver.findElement(locatorButton);
+    protected boolean waitForUrlChangeToExactUrl(String sUrl, int iTimeouts) {
+        WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(iTimeouts));
+        return driverWait.until(ExpectedConditions.urlToBe(sUrl));
+    }
+
+    protected boolean waitUntilPageIsReady(int timeout) {
+        logger.info("waitUntilPageIsReady(" + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(driver1 -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
+    }
+
+    protected WebElement getWebElement(By locator) {
+        return driver.findElement(locator);
+    }
+
+    protected WebElement getWebElement(By locator, int timeout) {
+        logger.debug("getWebElement(" + locator + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    protected void clickOnWebElement(By locator) {
+        logger.debug("clickOnWebElement(" + locator + ")");
+        WebElement button = getWebElement(locator);
         button.click();
     }
 
-    public void type(By locatorType, String text) {
-        WebElement element = driver.findElement(locatorType);
+    protected void typeTextToWebElement(By locator, String text) {
+        logger.debug("getWebElement(" + locator + ", " + text + ")");
+        WebElement element = getWebElement(locator);
         element.sendKeys(text);
+    }
+
+    protected void clearAndTypeTextToWebElement(By locator, String text) {
+        logger.debug("getWebElement(" + locator + ", " + text + ")");
+        WebElement element = getWebElement(locator);
+        element.clear();
+        element.sendKeys(text);
+    }
+
+    protected String getAttributeFromWebElement(WebElement element, String sAttribute) {
+        logger.debug("getAttributeFromWebElement(" + element + ", " + sAttribute + ")");
+        return element.getAttribute(sAttribute);
+    }
+
+    protected String getValueFromWebElement(WebElement element) {
+        logger.debug("getValueFromWebElement(" + element + ")");
+        return getAttributeFromWebElement(element, "value");
     }
 }
