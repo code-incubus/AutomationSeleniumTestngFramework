@@ -3,3 +3,4 @@
 drivers/
 logs/
 target/
+allure-results/

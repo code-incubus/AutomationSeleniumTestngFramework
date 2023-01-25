@@ -1,6 +1,8 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -27,5 +29,15 @@ public abstract class BasePage extends LoggerUtils {
     protected boolean waitForUrlChange(String sUrl, int iTimeouts) {
         WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(iTimeouts));
         return driverWait.until(ExpectedConditions.urlContains(sUrl));
+    }
+
+    public void click(By locatorButton) {
+        WebElement button = driver.findElement(locatorButton);
+        button.click();
+    }
+
+    public void type(By locatorType, String text) {
+        WebElement element = driver.findElement(locatorType);
+        element.sendKeys(text);
     }
 }
