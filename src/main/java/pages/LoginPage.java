@@ -31,16 +31,6 @@ public class LoginPage extends CommonLoggedOutPage {
         clearAndTypeTextToWebElement(Locators.USERNAME, sUsername);
     }
 
-    public String getUsername() {
-        logger.debug("getUsername()");
-        return getValueFromWebElement(getWebElement(Locators.USERNAME));
-    }
-
-    public String getPassword() {
-        logger.debug("getPassword()");
-        return getValueFromWebElement(getWebElement(Locators.PASSWORD));
-    }
-
     public void typePassword(String sPassword) {
         logger.debug("typePassword(" + sPassword + ")");
         clearAndTypeTextToWebElement(Locators.PASSWORD, sPassword);
@@ -53,10 +43,26 @@ public class LoginPage extends CommonLoggedOutPage {
         return devicesPage.verifyDevicesPage();
     }
 
+    public String getUsername() {
+        logger.debug("getUsername()");
+        return getValueFromWebElement(getWebElement(Locators.USERNAME));
+    }
+
+    public String getPassword() {
+        logger.debug("getPassword()");
+        return getValueFromWebElement(getWebElement(Locators.PASSWORD));
+    }
+
     public LoginPage clickOnLoginButtonNoProgress() {
         logger.debug("clickOnLoginButtonNoProgress()");
         clickOnWebElement(Locators.LOGIN_BUTTON);
         LoginPage loginPage = new LoginPage(driver);
         return loginPage.verifyLoginPage();
+    }
+
+    public void login(String sUsername, String sPassword) {
+        typeUsername(sUsername);
+        typePassword(sPassword);
+        clickOnLoginButton();
     }
 }

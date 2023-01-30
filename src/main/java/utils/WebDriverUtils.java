@@ -38,6 +38,7 @@ public class WebDriverUtils extends LoggerUtils {
                     } else {
                         System.setProperty("webdriver.gecko.driver", "drivers/geckodriver-windows-32bit.exe");
                         driver = new FirefoxDriver(options);
+                        driver.get(PropertiesUtils.getBaseUrl());
                     }
                     break;
                 }
@@ -51,6 +52,7 @@ public class WebDriverUtils extends LoggerUtils {
                     } else {
                         System.setProperty("webdriver.gecko.driver", "drivers/chromedriver-windows-32bit.exe");
                         driver = new ChromeDriver(options);
+                        driver.get(PropertiesUtils.getBaseUrl());
                     }
                     break;
                 }

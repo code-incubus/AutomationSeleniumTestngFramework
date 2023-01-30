@@ -13,7 +13,7 @@ public class DevicesPage extends CommonLoggedInPage {
     }
 
     public DevicesPage open() {
-        logger.info("Opening Login page...");
+        logger.info("Opening Devices page...");
         driver.get(DEVICES_PAGE_URL);
         return this;
     }

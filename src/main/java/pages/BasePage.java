@@ -1,10 +1,9 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utils.LoggerUtils;
@@ -51,6 +50,15 @@ public abstract class BasePage extends LoggerUtils {
         logger.debug("getWebElement(" + locator + ", " + timeout + ")");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    protected WebElement getWebElement(By locator, int timeout, int pollingTime) {
+        logger.debug("getWebElement(" + locator + ", " + timeout + ", " + pollingTime + ")");
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(Duration.ofSeconds(timeout))
+                .pollingEvery(Duration.ofSeconds(pollingTime))
+                .ignoring(NoSuchElementException.class);
+        return wait.until(driver1 -> driver.findElement(locator));
     }
 
     protected void clickOnWebElement(By locator) {

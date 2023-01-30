@@ -93,10 +93,6 @@ public class PropertiesUtils extends LoggerUtils {
         return Boolean.parseBoolean(getProperty("headless"));
     }
 
-    public static String getDriversFolder() {
-        return getProperty("driversFolders");
-    }
-
     public static String getHubUrl() {
         return getProperty("remoteHubUrl");
     }

@@ -26,11 +26,12 @@ public class LoginTests extends BaseTest {
     @Test
     public void test01_LOGIN_001_successfulLoginLogout() {
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.open();
+        //loginPage.open();
         loginPage.verifyLoginPage();
         loginPage.typeUsername(sUsername);
         loginPage.typePassword(sPassword);
         DevicesPage devicesPage = loginPage.clickOnLoginButton();
+        devicesPage.clickOnUsersPage();
     }
 
     @AfterMethod(alwaysRun = true)
