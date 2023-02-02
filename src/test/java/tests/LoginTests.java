@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.DevicesPage;
 import pages.LoginPage;
+import utils.Locators;
 import utils.PropertiesUtils;
 
 public class LoginTests extends BaseTest {
@@ -26,12 +27,11 @@ public class LoginTests extends BaseTest {
     @Test
     public void test01_LOGIN_001_successfulLoginLogout() {
         LoginPage loginPage = new LoginPage(driver);
-        //loginPage.open();
         loginPage.verifyLoginPage();
         loginPage.typeUsername(sUsername);
         loginPage.typePassword(sPassword);
         DevicesPage devicesPage = loginPage.clickOnLoginButton();
-        devicesPage.clickOnUsersPage();
+        devicesPage.logout();
     }
 
     @AfterMethod(alwaysRun = true)

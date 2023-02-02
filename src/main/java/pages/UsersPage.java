@@ -3,7 +3,6 @@ package pages;
 import data.PageUrlPaths;
 import data.Time;
 import org.openqa.selenium.WebDriver;
-import utils.Locators;
 
 public class UsersPage extends CommonLoggedInPage {
 

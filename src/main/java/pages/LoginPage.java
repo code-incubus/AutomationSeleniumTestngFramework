@@ -21,7 +21,7 @@ public class LoginPage extends CommonLoggedOutPage {
     }
 
     public LoginPage verifyLoginPage() {
-        waitForUrlChangeToExactUrl(LOGIN_PAGE_URL, Time.TIME_SHORTEST);
+        waitForUrlChange(LOGIN_PAGE_URL, Time.TIME_SHORTEST);
         waitUntilPageIsReady(Time.TIME_SHORT);
         return this;
     }
