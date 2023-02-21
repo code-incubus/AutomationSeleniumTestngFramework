@@ -10,6 +10,7 @@ public class AccountPage extends CommonLoggedInPage {
 
     public AccountPage(WebDriver driver) {
         super(driver);
+        logger.info("new AccountPage()");
     }
 
     public AccountPage verifyAccountPage() {

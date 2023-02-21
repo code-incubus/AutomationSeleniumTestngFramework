@@ -3,6 +3,7 @@ package pages;
 import data.PageUrlPaths;
 import data.Time;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import utils.Locators;
 
 public class LoginPage extends CommonLoggedOutPage {
@@ -15,7 +16,7 @@ public class LoginPage extends CommonLoggedOutPage {
     }
 
     public LoginPage open() {
-        logger.info("Opening Login page...");
+        logger.debug("Opening Login page...");
         driver.get(LOGIN_PAGE_URL);
         return this;
     }
@@ -28,11 +29,13 @@ public class LoginPage extends CommonLoggedOutPage {
 
     public void typeUsername(String sUsername) {
         logger.debug("typeUsername(" + sUsername + ")");
+        Assert.assertTrue(isUsernameFieldDisplayed(), "Username Text Field is NOT displayed on Login Page!");
         clearAndTypeTextToWebElement(Locators.USERNAME, sUsername);
     }
 
     public void typePassword(String sPassword) {
         logger.debug("typePassword(" + sPassword + ")");
+        Assert.assertTrue(isPasswordFieldDisplayed(), "Password Text Field is NOT displayed on Login Page!");
         clearAndTypeTextToWebElement(Locators.PASSWORD, sPassword);
     }
 
@@ -45,12 +48,24 @@ public class LoginPage extends CommonLoggedOutPage {
 
     public String getUsername() {
         logger.debug("getUsername()");
+        Assert.assertTrue(isUsernameFieldDisplayed(), "Username Text Field is NOT displayed on Login Page!");
         return getValueFromWebElement(getWebElement(Locators.USERNAME));
+    }
+
+    public boolean isUsernameFieldDisplayed() {
+        logger.debug("isUsernameFieldDisplayed()");
+        return isWebElementDisplayed(Locators.USERNAME);
     }
 
     public String getPassword() {
         logger.debug("getPassword()");
+        Assert.assertTrue(isPasswordFieldDisplayed(), "Password Text Field is NOT displayed on Login Page!");
         return getValueFromWebElement(getWebElement(Locators.PASSWORD));
+    }
+
+    public boolean isPasswordFieldDisplayed() {
+        logger.debug("isUsernameFieldDisplayed()");
+        return isWebElementDisplayed(Locators.PASSWORD);
     }
 
     public LoginPage clickOnLoginButtonNoProgress() {
@@ -64,5 +79,16 @@ public class LoginPage extends CommonLoggedOutPage {
         typeUsername(sUsername);
         typePassword(sPassword);
         clickOnLoginButton();
+    }
+
+    public boolean isErrorLoginMessageDisplayed() {
+        logger.debug("isErrorLoginMessageDisplayed()");
+        return isWebElementDisplayed(Locators.INVALID_CREDENTIALS_ERROR_BOX);
+    }
+
+    public String getErrorLoginMessage() {
+        logger.debug("getErrorLoginMessage()");
+        Assert.assertTrue(isErrorLoginMessageDisplayed(), "Error message is NOT displayed on Login Page!");
+        return getTextFromWebElement(getWebElement(Locators.INVALID_CREDENTIALS_ERROR_BOX));
     }
 }

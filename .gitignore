@@ -4,3 +4,4 @@ drivers/
 logs/
 target/
 allure-results/
+screenshots/

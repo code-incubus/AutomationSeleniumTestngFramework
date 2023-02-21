@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Testing Everyware Cloud Console Regression Suite" parallel="methods" thread-count="4">
+    <test name="Regression Tests">
+        <groups>
+            <run>
+                <exclude name="deprecated"/>
+                <exclude name="broken"/>
+                <exclude name="sequential"/>
+                <exclude name="bugs"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="tests.*"/>
+        </packages>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

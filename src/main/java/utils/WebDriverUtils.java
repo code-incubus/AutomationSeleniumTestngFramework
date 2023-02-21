@@ -24,7 +24,7 @@ public class WebDriverUtils extends LoggerUtils {
         boolean bHeadless = PropertiesUtils.getHeadless();
         String sHubUrl = PropertiesUtils.getHubUrl();
 
-        logger.debug("setUpDriver(" + sBrowser + ", Is Headless: " + bHeadless + ")");
+        logger.info("setUpDriver(" + sBrowser + ", Is Headless: " + bHeadless + ")");
 
         try {
             switch (sBrowser) {

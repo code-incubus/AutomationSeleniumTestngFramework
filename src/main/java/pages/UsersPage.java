@@ -11,6 +11,7 @@ public class UsersPage extends CommonLoggedInPage {
 
     public UsersPage(WebDriver driver) {
         super(driver);
+        logger.info("new UsersPage()");
     }
 
     public UsersPage verifyUsersPage() {

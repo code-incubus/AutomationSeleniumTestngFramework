@@ -1,10 +1,8 @@
 package pages;
 
+import data.Time;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 import utils.LoggerUtils;
 import utils.PropertiesUtils;
@@ -22,7 +20,7 @@ public abstract class BasePage extends LoggerUtils {
     }
 
     protected String getPageUrl(String sPath) {
-        logger.info("getPageUrl(" + sPath + ")");
+        logger.debug("getPageUrl(" + sPath + ")");
         return PropertiesUtils.getBaseUrl() + sPath;
     }
 
@@ -37,7 +35,7 @@ public abstract class BasePage extends LoggerUtils {
     }
 
     protected boolean waitUntilPageIsReady(int timeout) {
-        logger.info("waitUntilPageIsReady(" + timeout + ")");
+        logger.debug("waitUntilPageIsReady(" + timeout + ")");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         return wait.until(driver1 -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
     }
@@ -63,8 +61,8 @@ public abstract class BasePage extends LoggerUtils {
 
     protected void clickOnWebElement(By locator) {
         logger.debug("clickOnWebElement(" + locator + ")");
-        WebElement button = getWebElement(locator);
-        button.click();
+        WebElement element = getWebElement(locator);
+        element.click();
     }
 
     protected void typeTextToWebElement(By locator, String text) {
@@ -88,5 +86,26 @@ public abstract class BasePage extends LoggerUtils {
     protected String getValueFromWebElement(WebElement element) {
         logger.debug("getValueFromWebElement(" + element + ")");
         return getAttributeFromWebElement(element, "value");
+    }
+
+    protected String getValueFromWebElementJS(WebElement element) {
+        logger.debug("getValueFromWebElementJS(" + element + ")");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        return (String) js.executeScript("return arguments.[0].value", element);
+    }
+
+    protected boolean isWebElementDisplayed(By locator) {
+        logger.debug("isWebElementDisplayed(" + locator + ")");
+        try {
+            WebElement webElement = getWebElement(locator);
+            return webElement.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    protected String getTextFromWebElement(WebElement element) {
+        logger.debug("getTextFromWebElement(" + element + ")");
+        return element.getText();
     }
 }

@@ -10,6 +10,7 @@ public class PlatformPage extends CommonLoggedInPage {
 
     public PlatformPage(WebDriver driver) {
         super(driver);
+        logger.info("new PlatformPage()");
     }
 
     public PlatformPage verifyPlatformPage() {

@@ -96,4 +96,16 @@ public class PropertiesUtils extends LoggerUtils {
     public static String getHubUrl() {
         return getProperty("remoteHubUrl");
     }
+
+    public static String getLocale() {
+        return getProperty("locale");
+    }
+
+    public static boolean getTakeScreenshot() {
+        return Boolean.parseBoolean(getProperty("takeScreenshot"));
+    }
+
+    public static String getScreenshotsFolder() {
+        return getProperty("screenshotsFolder");
+    }
 }

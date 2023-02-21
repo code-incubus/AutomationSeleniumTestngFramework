@@ -10,10 +10,11 @@ public class DevicesPage extends CommonLoggedInPage {
 
     public DevicesPage(WebDriver driver) {
         super(driver);
+        logger.info("new DevicesPage()");
     }
 
     public DevicesPage open() {
-        logger.info("Opening Devices page...");
+        logger.debug("Opening Devices page...");
         driver.get(DEVICES_PAGE_URL);
         return this;
     }
