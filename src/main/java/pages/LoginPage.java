@@ -75,10 +75,13 @@ public class LoginPage extends CommonLoggedOutPage {
         return loginPage.verifyLoginPage();
     }
 
-    public void login(String sUsername, String sPassword) {
+    public DevicesPage login(String sUsername, String sPassword) {
+        logger.debug("login(" + sUsername + ", " + sPassword + ")");
         typeUsername(sUsername);
         typePassword(sPassword);
         clickOnLoginButton();
+        DevicesPage devicesPage = new DevicesPage(driver);
+        return devicesPage.verifyDevicesPage();
     }
 
     public boolean isErrorLoginMessageDisplayed() {

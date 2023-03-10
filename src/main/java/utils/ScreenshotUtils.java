@@ -18,11 +18,11 @@ public class ScreenshotUtils extends LoggerUtils {
 
     public static void takeScreenshot(WebDriver driver, String sTestName) {
         logger.debug("takeScreenshot(" + sTestName + ")");
-        String sPathToFile = createScreenshotPath(sTestName);
         if (WebDriverUtils.hasDriverQuit(driver)) {
             logger.debug("Screenshot for test " + sTestName + " could not be taken! Driver instance has quit!");
             return;
         }
+        String sPathToFile = createScreenshotPath(sTestName);
         TakesScreenshot screenshot = ((TakesScreenshot) driver);
         File scrFile = screenshot.getScreenshotAs(OutputType.FILE);
         File destinationFile = new File(sPathToFile);

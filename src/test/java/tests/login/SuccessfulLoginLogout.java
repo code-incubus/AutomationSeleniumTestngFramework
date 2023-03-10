@@ -8,12 +8,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.DevicesPage;
 import pages.LoginPage;
+import pages.UsersPage;
 import tests.BaseTest;
 import utils.PropertiesUtils;
 
 @Test(groups = {TestGroups.REGRESSION, TestGroups.SANITY, TestGroups.LOGIN})
 public class SuccessfulLoginLogout extends BaseTest {
 
+    private String sTestName = this.getClass().getName();
     private WebDriver driver;
 
     private String sUsername;
@@ -21,6 +23,7 @@ public class SuccessfulLoginLogout extends BaseTest {
 
     @BeforeMethod
     public void setupTest() {
+        logger.info("[SETUP TEST] " + sTestName);
         driver = setUpDriver();
         sUsername = PropertiesUtils.getAdminUsername();
         sPassword = PropertiesUtils.getAdminPassword();
@@ -28,16 +31,25 @@ public class SuccessfulLoginLogout extends BaseTest {
 
     @Test
     public void testSuccessfulLoginLogout() {
+        logger.info("[START TEST] " + sTestName);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.verifyLoginPage();
         loginPage.typeUsername(sUsername);
         loginPage.typePassword(sPassword);
         DevicesPage devicesPage = loginPage.clickOnLoginButton();
+        devicesPage.verifyDevicesPage();
         devicesPage.logout();
+        loginPage = loginPage.verifyLoginPage();
+        devicesPage = loginPage.login(sUsername, sPassword);
+        devicesPage.clickOnDevicesPage();
+        devicesPage.clickOnUsersPage();
+        devicesPage.clickOnAccountPage();
+        devicesPage.clickOnPlatformPage();
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDownTest(ITestResult testResult) {
+        logger.info("[END TEST] " + sTestName);
         tearDown(driver, testResult);
     }
 }

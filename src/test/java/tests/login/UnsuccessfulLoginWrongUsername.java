@@ -48,6 +48,7 @@ public class UnsuccessfulLoginWrongUsername extends BaseTest {
 
     @AfterMethod(alwaysRun = true)
     public void tearDownTest(ITestResult testResult) {
+        logger.info("[END TEST] " + sTestName);
         tearDown(driver, testResult);
     }
 }
