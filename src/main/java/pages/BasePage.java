@@ -115,4 +115,68 @@ public abstract class BasePage extends LoggerUtils {
         logger.debug("getTextFromWebElement(" + element + ")");
         return element.getText();
     }
+
+    protected WebElement waitForElementToBeVisible(By locator, int timeout) {
+        logger.debug("waitForElementToBeVisible(" + locator + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    protected WebElement waitForElementToBeVisible(WebElement element, int timeout) {
+        logger.debug("waitForElementToBeVisible(" + element + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected boolean waitForElementToBeInvisible(By locator, int timeout) {
+        logger.debug("waitForElementToBeInvisible(" + locator + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    protected boolean waitForElementToBeInvisible(WebElement element, int timeout) {
+        logger.debug("waitForElementToBeInvisible(" + element + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    protected boolean isWebElementVisible(By locator, int timeout) {
+        logger.debug("isWebElementVisible(" + locator + ", " + timeout + ")");
+        try {
+            waitForElementToBeVisible(locator, timeout);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    protected boolean isWebElementVisible(WebElement element, int timeout) {
+        logger.debug("isWebElementVisible(" + element + ", " + timeout + ")");
+        try {
+            waitForElementToBeVisible(element, timeout);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    protected boolean isWebElementInvisible(By locator, int timeout) {
+        logger.debug("isWebElementInvisible(" + locator + ", " + timeout + ")");
+        try {
+            waitForElementToBeInvisible(locator, timeout);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    protected boolean isWebElementInvisible(WebElement element, int timeout) {
+        logger.debug("isWebElementInvisible(" + element + ", " + timeout + ")");
+        try {
+            waitForElementToBeInvisible(element, timeout);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
