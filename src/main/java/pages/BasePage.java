@@ -59,17 +59,45 @@ public abstract class BasePage extends LoggerUtils {
 
     protected WebElement getWebElement(By locator, int timeout, int pollingTime) {
         logger.debug("getWebElement(" + locator + ", " + timeout + ", " + pollingTime + ")");
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+        Wait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeout))
                 .pollingEvery(Duration.ofSeconds(pollingTime))
                 .ignoring(NoSuchElementException.class);
         return wait.until(driver1 -> driver.findElement(locator));
     }
 
+    /**
+     * When concatenating and searching for elements using XPAH, when searching for nested elements, it is very important
+     * to take care that the searched element, i.e. nested, does not continue with the (//) character. Why?
+     * When we search for an element inside an element (nested), for example, element.findElement(//<xpath>)
+     * we make a big mistake because this XPATH searches from the beginning of the DOM structure and not from the current node.
+     * For this reason, we need to use (.//) instead of (//) when creating the XPATH
+     * @param element
+     * @param locator
+     * @return
+     */
+    protected WebElement getNestedWebElement(WebElement element, By locator) {
+        logger.debug("getNestedWebElement(" + element + ", " + locator + ")");
+        return element.findElement(locator);
+    }
+
+    protected WebElement getNestedWebElement(WebElement element, By locator, int timeout) {
+        logger.debug("getWebElement(" + element + ", " + locator + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, locator));
+
+    }
+
     protected void clickOnWebElement(By locator) {
         logger.debug("clickOnWebElement(" + locator + ")");
         WebElement element = getWebElement(locator);
         element.click();
+    }
+
+    protected void clickOnWebElement(WebElement element, int timeout) {
+        logger.debug("getWebElement(" + element + ", " + timeout + ")");
+        WebElement webElement = waitForElementToBeClickable(element, timeout);
+        webElement.click();
     }
 
     protected void typeTextToWebElement(By locator, String text) {
@@ -111,17 +139,49 @@ public abstract class BasePage extends LoggerUtils {
         }
     }
 
+    protected boolean isNestedWebElementDisplayed(WebElement element, By locator) {
+        logger.debug("isNestedWebElementDisplayed(" + element + ", " + locator + ")");
+        try {
+            WebElement nestedElement = element.findElement(locator);
+            return nestedElement.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     protected String getTextFromWebElement(WebElement element) {
         logger.debug("getTextFromWebElement(" + element + ")");
         return element.getText();
     }
 
+    protected WebElement waitForElementToBeClickable(WebElement element, int timeout) {
+        logger.debug("waitForElementToBeClickable(" + element + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    /**
+     * Checking if web element exists via locator. If exist it will return WebElement.
+     * Useful without Page Factory.
+     *
+     * @param locator
+     * @param timeout
+     * @return
+     */
     protected WebElement waitForElementToBeVisible(By locator, int timeout) {
         logger.debug("waitForElementToBeVisible(" + locator + ", " + timeout + ")");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
+    /**
+     * Checking if web element is visible or not. Here, we already get element.
+     * Useful for Page Factory.
+     *
+     * @param element
+     * @param timeout
+     * @return
+     */
     protected WebElement waitForElementToBeVisible(WebElement element, int timeout) {
         logger.debug("waitForElementToBeVisible(" + element + ", " + timeout + ")");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
@@ -178,5 +238,20 @@ public abstract class BasePage extends LoggerUtils {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    protected boolean isWebElementEnabled(WebElement element, int timeout) {
+        logger.debug("isWebElementEnabled(" + element + ", " + timeout + ")");
+        try {
+            waitForElementToBeClickable(element, timeout);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    protected boolean isWebElementEnabled(WebElement element) {
+        logger.debug("isWebElementEnabled(" + element + ")");
+        return element.isEnabled();
     }
 }
