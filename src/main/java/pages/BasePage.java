@@ -67,7 +67,7 @@ public abstract class BasePage extends LoggerUtils {
     }
 
     /**
-     * When concatenating and searching for elements using XPAH, when searching for nested elements, it is very important
+     * When concatenating and searching for elements using XPATH, when searching for nested elements, it is very important
      * to take care that the searched element, i.e. nested, does not continue with the (//) character. Why?
      * When we search for an element inside an element (nested), for example, element.findElement(//<xpath>)
      * we make a big mistake because this XPATH searches from the beginning of the DOM structure and not from the current node.

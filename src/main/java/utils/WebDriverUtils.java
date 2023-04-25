@@ -38,6 +38,7 @@ public class WebDriverUtils extends LoggerUtils {
                         driver = remoteWebDriver;
                     } else {
                         System.setProperty("webdriver.gecko.driver", "drivers/geckodriver-windows-32bit.exe");
+                        System.setProperty("webdriver.firefox.bin", "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
                         driver = new FirefoxDriver(options);
                         driver.get(PropertiesUtils.getBaseUrl());
                     }
@@ -51,7 +52,7 @@ public class WebDriverUtils extends LoggerUtils {
                         remoteWebDriver.setFileDetector(new LocalFileDetector());
                         driver = remoteWebDriver;
                     } else {
-                        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver-windows-32bit.exe");
+                        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver-windows-32bit/chromedriver.exe");
                         driver = new ChromeDriver(options);
                         driver.get(PropertiesUtils.getBaseUrl());
                     }
