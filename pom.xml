@@ -19,7 +19,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.8.0</version>
+            <version>4.8.3</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency>
@@ -75,54 +75,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.github.webdriverextensions</groupId>
-                <artifactId>webdriverextensions-maven-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>install-drivers</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <installationDirectory>${driversFolder}</installationDirectory>
-                    <drivers>
-                        <driver>
-                            <name>chromedriver</name>
-                            <platform>windows</platform>
-                            <bit>32</bit>
-                        </driver>
-                        <driver>
-                            <name>chromedriver</name>
-                            <platform>mac</platform>
-                            <bit>64</bit>
-                        </driver>
-                        <driver>
-                            <name>chromedriver</name>
-                            <platform>linux</platform>
-                            <bit>64</bit>
-                        </driver>
-                        <driver>
-                            <name>geckodriver</name>
-                            <platform>windows</platform>
-                            <bit>32</bit>
-                        </driver>
-                        <driver>
-                            <name>geckodriver</name>
-                            <platform>mac</platform>
-                            <bit>64</bit>
-                        </driver>
-                        <driver>
-                            <name>geckodriver</name>
-                            <platform>linux</platform>
-                            <bit>64</bit>
-                            <version>0.26.0</version>
-                        </driver>
-                    </drivers>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>

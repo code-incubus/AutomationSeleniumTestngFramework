@@ -16,7 +16,7 @@ public class SSH extends LoggerUtils {
         StringBuilder output = new StringBuilder();
         int exitStatus = -1;
         try {
-            jsch.addIdentity(pathToKey); //TODO Change once you try it on a certain device.
+            //jsch.addIdentity(pathToKey); //TODO Change once you try it on a certain device.
             session = jsch.getSession("root", remoteDevice, 22);
             session.setConfig("StrictHostKeyChecking", "no");
             session.connect();
