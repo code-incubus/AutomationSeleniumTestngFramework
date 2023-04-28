@@ -8,7 +8,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.DevicesPage;
 import pages.LoginPage;
-import pages.UsersPage;
 import tests.BaseTest;
 import utils.PropertiesUtils;
 
@@ -37,9 +36,9 @@ public class SuccessfulLoginLogout extends BaseTest {
         loginPage.typeUsername(sUsername);
         loginPage.typePassword(sPassword);
         DevicesPage devicesPage = loginPage.clickOnLoginButton();
-        devicesPage.verifyDevicesPage();
+        //devicesPage.verifyDevicesPage(); // TODO This is duplication considering that we already return verified object in previous step.
         devicesPage.logout();
-        loginPage = loginPage.verifyLoginPage();
+        //loginPage = loginPage.verifyLoginPage(); // TODO This is duplication considering that we already return verified object in previous step.
         devicesPage = loginPage.login(sUsername, sPassword);
         devicesPage.clickOnDevicesPage();
         devicesPage.clickOnUsersPage();
