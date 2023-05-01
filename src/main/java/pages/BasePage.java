@@ -11,6 +11,7 @@ import utils.PropertiesUtils;
 import utils.WebDriverUtils;
 
 import java.time.Duration;
+import java.util.List;
 
 public abstract class BasePage extends LoggerUtils {
 
@@ -72,6 +73,7 @@ public abstract class BasePage extends LoggerUtils {
      * When we search for an element inside an element (nested), for example, element.findElement(//<xpath>)
      * we make a big mistake because this XPATH searches from the beginning of the DOM structure and not from the current node.
      * For this reason, we need to use (.//) instead of (//) when creating the XPATH
+     *
      * @param element
      * @param locator
      * @return
@@ -85,7 +87,11 @@ public abstract class BasePage extends LoggerUtils {
         logger.debug("getWebElement(" + element + ", " + locator + ", " + timeout + ")");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(element, locator));
+    }
 
+    protected List<WebElement> getNestedWebElements(WebElement element, By locator) {
+        logger.debug("getNestedWebElement(" + element + ", " + locator + ")");
+        return element.findElements(locator);
     }
 
     protected void clickOnWebElement(By locator) {
@@ -200,6 +206,12 @@ public abstract class BasePage extends LoggerUtils {
         return wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
+    protected boolean waitForElementToBeSelected(WebElement element, int timeout) {
+        logger.debug("waitForElementToBeSelected(" + element + ", " + timeout + ")");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.elementToBeSelected(element));
+    }
+
     protected boolean isWebElementVisible(By locator, int timeout) {
         logger.debug("isWebElementVisible(" + locator + ", " + timeout + ")");
         try {
@@ -253,5 +265,15 @@ public abstract class BasePage extends LoggerUtils {
     protected boolean isWebElementEnabled(WebElement element) {
         logger.debug("isWebElementEnabled(" + element + ")");
         return element.isEnabled();
+    }
+
+
+    protected boolean isWebElementSelected(WebElement element) {
+        logger.debug("isWebElementSelected(" + element + ")");
+        try {
+            return element.isSelected();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
