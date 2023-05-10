@@ -13,7 +13,7 @@ public class ScreenshotUtils extends LoggerUtils {
     private static final String sScreenshotPath = System.getProperty("user.dir") + PropertiesUtils.getScreenshotsFolder();
 
     private static String createScreenshotPath(String sScreenshotName) {
-        return sScreenshotPath + sScreenshotName + ".png";
+        return sScreenshotPath + sScreenshotName + "_" + DateTimeUtils.getDateTimeStamp() + ".png";
     }
 
     public static void takeScreenshot(WebDriver driver, String sTestName) {
